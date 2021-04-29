@@ -1,4 +1,3 @@
-import {Text, View} from "react-native";
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import RegisterComponent from "../../components/SignUp";
 import register, {clearAuthState} from "../../context/actions/auth/register";
@@ -21,9 +20,12 @@ const Register = () => {
 
   useFocusEffect(
     useCallback(() => {
-      if (data || error) {
-        clearAuthState()(authDispatch)
+      return () => {
+        if (data || error) {
+          clearAuthState()(authDispatch)
+        }
       }
+
     }, [data, error])
   );
 

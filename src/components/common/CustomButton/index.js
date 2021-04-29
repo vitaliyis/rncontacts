@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, ActivityIndicator, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import colors from "../../../assets/theme/colors";
 
 const CustomButton = ({title, secondary, primary, danger, disabled, loading, onPress, style}) => {
-
-  const [focused, setFocused] = useState(false)
 
   const getBgColor = () => {
     if (disabled) {

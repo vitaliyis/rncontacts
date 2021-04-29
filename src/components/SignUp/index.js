@@ -6,6 +6,7 @@ import Container from "../common/Container";
 import styles  from './styles';
 import {useNavigation} from "@react-navigation/native";
 import {LOGIN} from "../../constants/routeNames";
+import Message from "../common/Message";
 
 const RegisterComponent = ({form, errors, onChange, onSubmit, loading, error}) => {
   const {navigate} = useNavigation()
@@ -21,7 +22,13 @@ const RegisterComponent = ({form, errors, onChange, onSubmit, loading, error}) =
 
         <View style={styles.form}>
 
-          {error?.error && <Text>{error.error}</Text>}
+          {error?.error &&
+          <Message
+            retry
+            danger
+            retryFn={onSubmit}
+            message={error?.error}
+          />}
 
           <Input
             label="Username"

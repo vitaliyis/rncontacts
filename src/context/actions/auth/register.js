@@ -16,7 +16,7 @@ export default ({
   dispatch({
     type: REGISTER_LOADING
   });
-  axiosInstance.post('/auth/register', {
+  axiosInstance.post('auth/register', {
     email,
     password,
     username,
@@ -24,6 +24,7 @@ export default ({
     last_name,
   })
     .then(res => {
+      console.log('res.data => ', res.data)
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data

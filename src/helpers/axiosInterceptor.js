@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use(
-  async config => {
+  async (config) => {
     const token = await AsyncStorage.getItem('token');
 
     if (token) {
@@ -21,8 +21,8 @@ axiosInstance.interceptors.request.use(
 
     return config;
   },
-  error => {
-    return Promise.reject(error)
+  (error) => {
+    return Promise.reject(error);
   }
 )
 

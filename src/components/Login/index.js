@@ -6,8 +6,9 @@ import Container from "../common/Container";
 import styles  from './styles';
 import {useNavigation} from "@react-navigation/native";
 import {REGISTER} from "../../constants/routeNames";
+import Message from "../common/Message";
 
-const LoginComponent = () => {
+const LoginComponent = ({onChange, onSubmit, error, loading}) => {
   const {navigate} = useNavigation()
 
   return (
@@ -19,11 +20,18 @@ const LoginComponent = () => {
         <Text style={styles.title}>Welcome to RNContacts</Text>
         <Text style={styles.subTitle}>Please login here</Text>
 
+
         <View style={styles.form}>
+
+          {error && !error.error && <Message onDismiss={() => {}} danger message="invalid credentials"/>}
+
+          {error?.error && <Message danger onDismiss message={error?.error}/>}
+
           <Input
             label="Username"
             iconPosition="right"
             placeholder="Enter Username"
+            onChangeText={(value) => onChange({name: 'userName', value})}
           />
           <Input
             label="Password"
@@ -31,9 +39,15 @@ const LoginComponent = () => {
             iconPosition="right"
             placeholder="Enter Password"
             secureTextEntry={true}
+            onChangeText={(value) => onChange({name: 'password', value})}
           />
 
-          <CustomButton primary title="Submit" />
+          <CustomButton
+            primary
+            title="Submit"
+            onPress={onSubmit}
+            loading={loading}
+          />
 
           <View style={styles.createSection}>
             <Text style={styles.infoText}>Need a new account?</Text>
