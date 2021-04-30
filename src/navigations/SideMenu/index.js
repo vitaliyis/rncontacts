@@ -4,8 +4,7 @@ import {Image, SafeAreaView, Text, TouchableOpacity, View, Alert} from "react-na
 import styles from "./styles";
 import {SETTINGS} from "../../constants/routeNames";
 import logoutUser from "../../context/actions/auth/logoutUser";
-import Icon from "react-native-vector-icons/Fontisto";
-import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import Icon from "../../components/common/Icon";
 
 const SideMenu = ({navigation, authDispatch}) => {
 
@@ -24,8 +23,8 @@ const SideMenu = ({navigation, authDispatch}) => {
   }
 
   const menuItems = [
-    {icon: <Icon size={17} name='player-settings'/>, name: 'Settings', onPress: () => navigation.navigate(SETTINGS)},
-    {icon: <MaterialIcon size={17} name='logout'/>, name: 'Logout', onPress: () => handleLogout()},
+    {icon: <Icon type='fontisto' size={17} name='player-settings'/>, name: 'Settings', onPress: () => navigation.navigate(SETTINGS)},
+    {icon: <Icon type='material' size={17} name='logout'/>, name: 'Logout', onPress: () => handleLogout()},
   ]
 
   return (
