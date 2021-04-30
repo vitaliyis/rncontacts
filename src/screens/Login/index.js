@@ -1,22 +1,30 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import LoginComponent from "../../components/Login";
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import {GlobalContext} from "../../context/Provider";
 import loginUser from "../../context/actions/auth/loginUser";
 
 const Login = () => {
-
   const [form, setForm] = useState({});
+  const [justSignUp, setJustSignUp] = useState(false);
+  const {params} = useRoute()
   const {authDispatch, authState: {error, loading}} = useContext(GlobalContext);
 
+  useEffect(() => {
+    if (params?.data) {
+      setJustSignUp(true);
+      setForm({...form, userName: params.data.username});
+    }
+  }, [params])
+
   const onSubmit = () => {
-    console.log('submit')
     if (form.userName && form.password) {
       loginUser(form)(authDispatch)
     }
   }
 
   const onChange = ({name, value}) => {
+    setJustSignUp(false);
     setForm({...form, [name]: value});
   }
 
@@ -27,6 +35,7 @@ const Login = () => {
       onSubmit={onSubmit}
       error={error}
       loading={loading}
+      justSignUp={justSignUp}
     />
   )
 }

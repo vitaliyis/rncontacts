@@ -11,13 +11,6 @@ const Register = () => {
   const [errors, setErrors] = useState({});
   const {authDispatch, authState: {error, loading, data}} = useContext(GlobalContext);
 
-  useEffect(() => {
-    if (data) {
-      navigate(LOGIN);
-    }
-  }, [data]);
-
-
   useFocusEffect(
     useCallback(() => {
       return () => {
@@ -87,7 +80,7 @@ const Register = () => {
       Object.values(errors).every((item) => !item)
     ) {
       console.log('success')
-      register(form)(authDispatch)
+      register(form)(authDispatch)((response) => navigate(LOGIN, {data: response}));
     }
   }
 

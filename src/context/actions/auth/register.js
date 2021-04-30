@@ -12,7 +12,7 @@ export default ({
   password,
   userName: username,
   firstName: first_name,
-  lastName: last_name,}) => dispatch => {
+  lastName: last_name,}) => dispatch => onSuccess => {
   dispatch({
     type: REGISTER_LOADING
   });
@@ -29,6 +29,8 @@ export default ({
         type: REGISTER_SUCCESS,
         payload: res.data
       });
+
+      onSuccess(res.data);
     })
     .catch(err => {console.log('err.response.data => ', err.response.data)
       dispatch({

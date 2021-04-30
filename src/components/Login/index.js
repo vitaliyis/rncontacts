@@ -8,10 +8,10 @@ import {useNavigation} from "@react-navigation/native";
 import {REGISTER} from "../../constants/routeNames";
 import Message from "../common/Message";
 
-const LoginComponent = ({onChange, onSubmit, error, loading}) => {
+const LoginComponent = ({form, onChange, onSubmit, error, loading, justSignUp}) => {
   const {navigate} = useNavigation();
   const [isSecureEntry, setIsSecureEntry] = useState(false);
-
+  console.log('justSignUp ==> ', justSignUp)
   return (
     <Container>
 
@@ -24,6 +24,8 @@ const LoginComponent = ({onChange, onSubmit, error, loading}) => {
 
         <View style={styles.form}>
 
+          {justSignUp && <Message onDismiss={() => {}} success message="Account created successfully"/>}
+
           {error && !error.error && <Message onDismiss={() => {}} danger message="invalid credentials"/>}
 
           {error?.error && <Message danger onDismiss message={error?.error}/>}
@@ -33,6 +35,7 @@ const LoginComponent = ({onChange, onSubmit, error, loading}) => {
             iconPosition="right"
             placeholder="Enter Username"
             onChangeText={(value) => onChange({name: 'userName', value})}
+            value={form.userName || null}
           />
           <Input
             label="Password"
