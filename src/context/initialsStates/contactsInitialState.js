@@ -1,17 +1,17 @@
 export default {
   getContacts: {
-    data: {},
+    data: [],
     error: null,
-    loading: false
+    loading: false,
   },
   createContacts: {
     data: {},
     error: null,
-    loading: false
+    loading: false,
   },
   deleteContacts: {
     data: {},
     error: null,
-    loading: false
+    loading: false,
   },
-}
+};
