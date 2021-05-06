@@ -7,11 +7,13 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import AppModal from '../common/AppModal';
 import Message from '../common/Message';
 import colors from '../../assets/theme/colors';
 import Icon from '../common/Icon';
 import styles from './styles';
+import {CREATE_CONTACT} from '../../constants/routeNames';
 
 const dataFake = [
   {
@@ -165,10 +167,12 @@ const dataFake = [
 ];
 
 const ContactsComponent = ({data, loading, modalVisible, setModalVisible}) => {
+  const {navigate} = useNavigation();
+
   const ListEmptyComponent = () => {
     return (
       <View style={{paddingVertical: 100, paddingHorizontal: 100}}>
-        <Message info message="Not contacts to show"/>
+        <Message info message="Not contacts to show" />
       </View>
     );
   };
@@ -176,7 +180,13 @@ const ContactsComponent = ({data, loading, modalVisible, setModalVisible}) => {
   const renderItem = ({item}) => {
     console.log('item => ', item);
 
-    const {contact_picture, first_name, last_name, phone_number, country_code} = item;
+    const {
+      contact_picture,
+      first_name,
+      last_name,
+      phone_number,
+      country_code,
+    } = item;
 
     return (
       <TouchableOpacity style={styles.itemContainer}>
@@ -212,51 +222,64 @@ const ContactsComponent = ({data, loading, modalVisible, setModalVisible}) => {
               <Text style={styles.name}> {last_name}</Text>
             </View>
 
-            <Text style={styles.phoneNumber}>{`${country_code} ${phone_number}`}</Text>
+            <Text
+              style={
+                styles.phoneNumber
+              }>{`${country_code} ${phone_number}`}</Text>
           </View>
-
         </View>
 
-        <Icon name="right" type="ant" size={18} color={colors.grey}/>
+        <Icon name="right" type="ant" size={18} color={colors.grey} />
       </TouchableOpacity>
     );
   };
 
   return (
-    <View style={{backgroundColor: colors.white}}>
-      <AppModal
-        title="My Profile!"
-        modalFooter={<></>}
-        modalBody={
-          <View>
-            <Text>Hello from modal</Text>
+    <>
+      <View style={{backgroundColor: colors.white}}>
+        <AppModal
+          title="My Profile!"
+          modalFooter={<></>}
+          modalBody={
+            <View>
+              <Text>Hello from modal</Text>
+            </View>
+          }
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        />
+
+        {loading && (
+          <View style={{paddingVertical: 100, paddingHorizontal: 100}}>
+            <ActivityIndicator color={colors.primary} size="large" />
           </View>
-        }
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
+        )}
 
-      {loading && (
-        <View style={{paddingVertical: 100, paddingHorizontal: 100}}>
-          <ActivityIndicator color={colors.primary} size="large"/>
-        </View>
-      )}
+        {!loading && (
+          <View style={{paddingVertical: 20}}>
+            <FlatList
+              renderItem={renderItem}
+              data={dataFake}
+              keyExtractor={(item) => String(item.id)}
+              ListEmptyComponent={ListEmptyComponent}
+              ListFooterComponent={<View style={{height: 150}}></View>}
+              ItemSeparatorComponent={() => (
+                <View
+                  style={{height: 0.5, backgroundColor: colors.grey}}></View>
+              )}
+            />
+          </View>
+        )}
+      </View>
 
-      {!loading && (
-        <View style={{paddingVertical: 20}}>
-          <FlatList
-            renderItem={renderItem}
-            data={dataFake}
-            keyExtractor={(item) => String(item.id)}
-            ListEmptyComponent={ListEmptyComponent}
-            ListFooterComponent={<View style={{height: 150}}></View>}
-            ItemSeparatorComponent={() => (
-              <View style={{height: 0.5, backgroundColor: colors.grey}}></View>
-            )}
-          />
-        </View>
-      )}
-    </View>
+      <TouchableOpacity
+        style={styles.floatingActionButton}
+        onPress={() => {
+          navigate(CREATE_CONTACT);
+        }}>
+        <Icon name="plus" color={colors.white} size={21} />
+      </TouchableOpacity>
+    </>
   );
 };
 
