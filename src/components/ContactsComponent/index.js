@@ -178,8 +178,6 @@ const ContactsComponent = ({data, loading, modalVisible, setModalVisible}) => {
   };
 
   const renderItem = ({item}) => {
-    console.log('item => ', item);
-
     const {
       contact_picture,
       first_name,
@@ -259,7 +257,7 @@ const ContactsComponent = ({data, loading, modalVisible, setModalVisible}) => {
           <View style={{paddingVertical: 20}}>
             <FlatList
               renderItem={renderItem}
-              data={dataFake}
+              data={data}
               keyExtractor={(item) => String(item.id)}
               ListEmptyComponent={ListEmptyComponent}
               ListFooterComponent={<View style={{height: 150}}></View>}
