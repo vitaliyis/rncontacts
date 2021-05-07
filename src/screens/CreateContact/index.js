@@ -16,6 +16,7 @@ const CreateContact = () => {
   } = useContext(GlobalContext);
   const sheetRef = useRef(null);
   const [form, setForm] = useState({});
+  const [localFile, setLocalFile] = useState(null);
 
   const onChangeText = ({name, value}) => {
     setForm({...form, [name]: value});
@@ -42,6 +43,13 @@ const CreateContact = () => {
     setForm({...form, isFavorite: !form.isFavorite});
   };
 
+  const onFileSelected = (image) => {
+    closeSheet();
+    setLocalFile(image);
+
+    console.log('image => ', image);
+  };
+
   return (
     <CreateContactComponent
       form={form}
@@ -54,6 +62,8 @@ const CreateContact = () => {
       sheetRef={sheetRef}
       openSheet={openSheet}
       closeSheet={closeSheet}
+      onFileSelected={onFileSelected}
+      localFile={localFile}
     />
   );
 };
