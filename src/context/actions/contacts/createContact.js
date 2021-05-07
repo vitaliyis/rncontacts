@@ -22,7 +22,6 @@ export default (form) => (dispatch) => (onSuccess) => {
   axios
     .post('/contacts/', requestPayload)
     .then((res) => {
-      console.log('res success => ', res.data);
       dispatch({
         type: CREATE_CONTACT_SUCCESS,
         payload: res.data,
@@ -31,7 +30,6 @@ export default (form) => (dispatch) => (onSuccess) => {
       onSuccess();
     })
     .catch((err) => {
-      console.log('err.response  => ', err.response);
       dispatch({
         type: CREATE_CONTACT_FAIL,
         payload: err.response
