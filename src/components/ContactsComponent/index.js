@@ -166,7 +166,7 @@ const dataFake = [
   },
 ];
 
-const ContactsComponent = ({data, loading, modalVisible, setModalVisible}) => {
+const ContactsComponent = ({data, loading, sortBy}) => {
   const {navigate} = useNavigation();
 
   const ListEmptyComponent = () => {
@@ -235,17 +235,17 @@ const ContactsComponent = ({data, loading, modalVisible, setModalVisible}) => {
   return (
     <>
       <View style={{backgroundColor: colors.white}}>
-        <AppModal
-          title="My Profile!"
-          modalFooter={<></>}
-          modalBody={
-            <View>
-              <Text>Hello from modal</Text>
-            </View>
-          }
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-        />
+        {/*<AppModal*/}
+        {/*  title="My Profile!"*/}
+        {/*  modalFooter={<></>}*/}
+        {/*  modalBody={*/}
+        {/*    <View>*/}
+        {/*      <Text>Hello from modal</Text>*/}
+        {/*    </View>*/}
+        {/*  }*/}
+        {/*  modalVisible={modalVisible}*/}
+        {/*  setModalVisible={setModalVisible}*/}
+        {/*/>*/}
 
         {loading && (
           <View style={{paddingVertical: 100, paddingHorizontal: 100}}>
@@ -257,7 +257,26 @@ const ContactsComponent = ({data, loading, modalVisible, setModalVisible}) => {
           <View style={{paddingVertical: 20}}>
             <FlatList
               renderItem={renderItem}
-              data={data}
+              data={
+                sortBy
+                  ? data.sort((a, b) => {
+                    if (sortBy === 'First Name') {
+                      if (b.first_name > a.first_name) {
+                        return -1;
+                      } else {
+                        return 1;
+                      }
+                    }
+                    if (sortBy === 'Last Name') {
+                      if (b.last_name > a.last_name) {
+                        return -1;
+                      } else {
+                        return 1;
+                      }
+                    }
+                  })
+                  : data
+              }
               keyExtractor={(item) => String(item.id)}
               ListEmptyComponent={ListEmptyComponent}
               ListFooterComponent={<View style={{height: 150}}></View>}
