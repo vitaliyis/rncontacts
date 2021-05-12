@@ -7,12 +7,11 @@ import ContactsComponent from '../../components/ContactsComponent';
 import {GlobalContext} from '../../context/Provider';
 import getContacts from '../../context/actions/contacts/getContacts';
 
-const Contacts = () => {
-  console.log('Contacts ======================');
+const Contacts = ({navigation}) => {
   const {setOptions, toggleDrawer} = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [sortBy, setSortBy] = useState(null);
-
+  console.log('navigation   ===================> ', navigation.navigate);
   const {
     contactsDispatch,
     contactsState: {
@@ -23,13 +22,11 @@ const Contacts = () => {
   console.log('data => ', data);
 
   useEffect(() => {
-    console.log('useEffect =================');
     getContacts()(contactsDispatch);
   }, []);
 
   const getSettings = async () => {
     const sortPref = await AsyncStorage.getItem('sortBy');
-    console.log('sortPref ======> ', sortPref);
     if (sortPref) {
       setSortBy(sortPref);
     }
@@ -40,8 +37,7 @@ const Contacts = () => {
       getSettings();
 
       return () => {};
-    }),
-    [],
+    }, []),
   );
 
   useEffect(() => {
